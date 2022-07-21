@@ -1,5 +1,5 @@
 <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-    <li class="{{ Request::segment(2) == 'dashboard' ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{ route('dashboard') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Home">{{ __('sidebar.dashboard')}}</span></a>
+    <li class="{{ Request::segment(2) == 'dashboard' ? 'active' : '' }} nav-item"><a class="d-flex align-items-center" href="{{ route('admin.dashboard') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Home">{{ __('sidebar.dashboard')}}</span></a>
     </li>
  
     <li class="{{ Request::segment(2) == 'role' ? 'has-sub sidebar-group-active open' : '' }} nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='shield'></i><span class="menu-title text-truncate" data-i18n="Page Layouts">Access Control</span><span class="badge badge-light-danger badge-pill ml-auto mr-1">3</span></a>

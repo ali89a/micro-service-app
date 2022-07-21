@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 Route::get('localization/{locale}', [LocalizationController::class, 'index']);
 Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+    return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth:admin', 'prefix' => 'access-control', 'as' => 'admin.'], function () {

@@ -9,7 +9,7 @@ class AdminRepo implements AdminInterface
 {
     public function allLatestUser()
     {
-        return Admin::with('hub', 'roles')->latest('id');
+        return Admin::with('roles')->latest('id');
     }
     public function allAdminList($relation, $column, $condition){
         return Admin::with($relation)->select($column)->where($condition)->get();

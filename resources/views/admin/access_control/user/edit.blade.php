@@ -1,16 +1,16 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Edit')
+@section('title', 'Admin Edit')
 @section('content')
 <div class="content-wrapper">
     @php
         $links = [
             'Home'=>route('admin.dashboard'),
-            'User list'=>route('admin.admin.index'),
-            'User Edit'=>'',
+            'Admin list'=>route('admin.admin.index'),
+            'Admin Edit'=>'',
         ]
     @endphp
-    <x-bread-crumb-component title='User list' :links="$links" />
+    <x-bread-crumb-component title='Admin list' :links="$links" />
     <div class="content-body">
         <!-- Basic Inputs start -->
         <section id="basic-input">
@@ -18,26 +18,13 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">User Edit</h4>
+                            <h4 class="card-title">Admin Edit</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.admin.update',$admin->id)}}" method="POST" class="" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="row">
-                                    <div class="col-xl-6 col-md-6 col-12 mb-1">
-                                        <div class="form-group">
-                                            <label for="name">Hub Name</label>
-                                            <select name="hub_id" id="hub" class="form-control form-control-sm select2">
-                                                @foreach($hubs as $hub)
-                                                    <option value="{{$hub->id}}" {{$hub->id===$admin->hub_id ? 'selected' : ''}}>{{$hub->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @if($errors->has('hub_id'))
-                                                <small class="text-danger">{{$errors->first('hub_id')}}</small>
-                                            @endif
-                                        </div>
-                                    </div>
                                     <div class="col-xl-6 col-md-6 col-12 mb-1">
                                         <div class="form-group">
                                             <label for="name">Name</label>

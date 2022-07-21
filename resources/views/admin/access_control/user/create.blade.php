@@ -5,11 +5,11 @@
     @php
         $links = [
             'Home'=>route('admin.dashboard'),
-            'User list'=>route('admin.admin.index'),
-            'User create'=>''
+            'Admin list'=>route('admin.admin.index'),
+            'Admin create'=>''
         ]
     @endphp
-    <x-bread-crumb-component title='User create' :links="$links" />
+    <x-bread-crumb-component title='Admin create' :links="$links" />
     <div class="content-body">
         <!-- Basic Inputs start -->
         <section id="basic-input">
@@ -17,25 +17,12 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">User Create</h4>
+                            <h4 class="card-title">Admin Create</h4>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.admin.store')}}" method="POST" class="" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-md-6 col-12 mb-1">
-                                        <div class="form-group">
-                                            <label for="hub">Hub Name</label>
-                                            <select name="hub_id" id="hub" class="form-control form-control-sm select2">
-                                                @foreach($hubs as $hub)
-                                                    <option value="{{$hub->id}}">{{$hub->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @if($errors->has('hub_id'))
-                                                <small class="text-danger">{{$errors->first('hub_id')}}</small>
-                                            @endif
-                                        </div>
-                                    </div>
                                     <div class="col-xl-6 col-md-6 col-12 mb-1">
                                         <div class="form-group">
                                             <label for="name">Name</label>

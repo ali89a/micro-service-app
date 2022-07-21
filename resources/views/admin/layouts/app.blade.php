@@ -22,7 +22,7 @@
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto">
-                    <a class="navbar-brand" href="{{route('dashboard')}}">
+                    <a class="navbar-brand" href="{{route('admin.dashboard')}}">
                         <span class="brand-logo"><img style="margin-left: 7px;" src="{{ asset('admin/app-assets/images/ico/favicon.ico') }}"></span>
                         <h4 class="ml-1 text-primary">Micro<br></h4>
                     </a>
@@ -47,7 +47,7 @@
     <div class="drag-target"></div>
 
     <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; <?php echo date("Y"); ?><a class="ml-25" href="https://www.parcelsheba.com/" target="_blank">Parcelsheba Ltd.</a><span class="d-none d-sm-inline-block"> All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Version 0.0.1<i data-feather="heart"></i></span></p>
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; <?php echo date("Y"); ?><a class="ml-25" href="#" target="_blank">Company Name</a><span class="d-none d-sm-inline-block"> All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Version 0.0.1<i data-feather="heart"></i></span></p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
 

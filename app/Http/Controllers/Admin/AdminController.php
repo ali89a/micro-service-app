@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AdminRequest;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 
 use App\Models\Admin;
 use App\Repository\Interfaces\AdminInterface;
@@ -16,7 +16,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
 {
-    protected $hubRepo;
     protected $adminRepo;
     public function __construct(AdminInterface $admin)
     {
@@ -57,7 +56,7 @@ class AdminController extends Controller
     public function create()
     {
         $data = [
-            'hubs'=>$this->hubRepo->getHubList(),
+           
             'roles' => Role::where('name', '!=', 'Super Admin')->where('name', '!=', 'Developer')->pluck('name', 'id'),
         ];
 
@@ -94,7 +93,6 @@ class AdminController extends Controller
     {
         $data = [
             'admin' => $admin,
-            'hubs'=>$this->hubRepo->getHubList(),
             'roles' => Role::where('name', '!=', 'Super Admin')->pluck('name', 'id'),
             'selected_roles' => Role::whereIn('name', $admin->getRoleNames())->pluck('id')
         ];

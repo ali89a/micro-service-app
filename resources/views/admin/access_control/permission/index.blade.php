@@ -19,7 +19,7 @@
                         <h4 class="card-title">Permission List</h4>
                         <div class="dt-action-buttons text-right">
                             <div class="dt-buttons d-inline-flex">
-                                <a href="{{route('admin.permission.create')}}" class="btn btn-primary">{{__('Add Permission')}}</a>
+                                <a href="{{route('admin.permission.create')}}" class="btn btn-sm btn-primary">{{__('Add Permission')}}</a>
                             </div>
                         </div>
                     </div>
