@@ -33,20 +33,24 @@
                     </div>
 
                     <div class="card-body table-responsive">
-                        <div class="row justify-content-center">
-                            <div class="col-md-3 form-group">
-                                <label for="from_date">From Date</label>
-                                <input type="text" id="from_date" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
+                        <form action="{{route('admin.admin.index')}}" method="get">
+                            @csrf
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 form-group">
+                                    <label for="from_date">From Date</label>
+                                    <input type="text" id="from_date" name="from_date" value="{{request()->from_date}}" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="to_date">To Date</label>
+                                    <input type="text" id="to_date" name="to_date" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="button"></label>
+                                    <button class="btn btn-primary form-control" type="submit">Search</button>
+                                </div>
                             </div>
-                            <div class="col-md-3 form-group">
-                                <label for="fp-default">To Date</label>
-                                <input type="text" id="fp-default" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="fp-default"></label>
-                                <button class="btn btn-primary form-control" type="submit">Search</button>
-                            </div>
-                        </div>
+                        </form>
+
                         <table id="dataTable" class="datatables-basic table table-bordered table-secondary table-striped">
                             {{-- show from datatable--}}
                         </table>
@@ -102,7 +106,8 @@
                     data: "role_info",
                     title: "Role",
                     searchable: true,
-                    "defaultContent": '<i class="text-danger">Not set</i>'
+                    "defaultContent": '<i class="text-danger">Not set</i>',
+                    orderable: true,
                 },
                 {
                     data: "status",

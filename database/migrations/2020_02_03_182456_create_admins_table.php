@@ -20,8 +20,7 @@ class CreateAdminsTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('mobile')->unique()->nullable();
-            $table->tinyInteger('isActive')->default(1);
-            $table->enum('collection', [1,0])->default(0);
+            $table->enum('is_active', [1,0])->default(1)->comment('1=Active, 0=Inactive');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

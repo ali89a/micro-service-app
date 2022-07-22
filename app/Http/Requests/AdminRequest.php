@@ -27,7 +27,6 @@ class AdminRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'hub_id' => 'numeric|required',
                     'name' => 'required|string',
                     'email' => 'required|email|unique:admins,email',
                     'password' => 'required|string|min:8|confirmed',
@@ -40,13 +39,12 @@ class AdminRequest extends FormRequest
             case 'PUT':
                 return [
                     'id'=>'required|numeric',
-                    'hub_id' => 'numeric|required',
                     'name' => 'required|string',
                     'email' => "required|email|unique:admins,email,{$this->id}",
                     'mobile' => "required|digits:11|regex:/(01)[0-9]{9}/|unique:admins,mobile,{$this->id}",
                     'roles' => 'required|array',
                     'password' => 'nullable|string|min:8|confirmed',
-                    'isActive'=>"required",Rule::in([0, 1]),
+                    'is_active'=>"required",Rule::in([0, 1]),
                 ];
                 break;
         }
