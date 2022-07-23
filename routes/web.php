@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Admin\AdminController;
@@ -28,6 +29,7 @@ Route::get('/dashboard', function () {
 Route::group(['middleware' => 'auth:admin', 'prefix' => 'access-control', 'as' => 'admin.'], function () {
     Route::resource('permission', PermissionController::class);
     Route::resource('role', RoleController::class);
+    Route::resource('plans', PlanController::class);
 
     Route::get('/admin/login/{adminId}', [AdminController::class, 'login'])->name('admin.login');
     Route::put('password-reset/{id}', [AdminController::class, 'passwordReset'])->name('admin.password.reset');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class PlanController extends Controller
 {
@@ -15,7 +16,17 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        if (\request()->ajax()) {
+            $plans = Plan::all();
+            return DataTables::of($plans)
+                ->addIndexColumn()
+                ->addColumn('action', function ($plan) {
+                    return view('admin.plan.action-button', compact('plan'));
+                })
+                ->rawColumns(['action'])
+                ->tojson();
+        }
+        return view('admin.plan.index');
     }
 
     /**
@@ -25,7 +36,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.plan.create');
     }
 
     /**
