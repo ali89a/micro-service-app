@@ -47,7 +47,7 @@ class LoginRequest extends FormRequest
         $credentials = [
             'email' => $this->email,
             'password' => $this->password,
-            'isActive'=>1
+            'is_active'=>1
         ];
         if (!Auth::guard('admin')->attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());

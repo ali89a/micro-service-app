@@ -167,6 +167,7 @@ return [
          */
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
         /*
          * Application Service Providers...
          */
