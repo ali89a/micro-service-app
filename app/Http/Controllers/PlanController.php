@@ -47,7 +47,7 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

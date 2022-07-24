@@ -21,7 +21,8 @@ class PlanSeeder extends Seeder
                 'duration' => 'Unlimited',
                 'max_users' => 5,
                 'max_customers' => 5,
-                'max_venders' => 5,
+                'max_categories' => 5,
+                'max_products' => 10,
                 'image'=>'free_plan.png',
             ]
         );

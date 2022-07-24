@@ -20,7 +20,8 @@ class CreatePlansTable extends Migration
             $table->string('duration', 100);
             $table->integer('max_users')->default(0);
             $table->integer('max_customers')->default(0);
-            $table->integer('max_venders')->default(0);
+            $table->integer('max_categories')->default(0);
+            $table->integer('max_products')->default(0);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
