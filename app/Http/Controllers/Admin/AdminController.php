@@ -25,18 +25,27 @@ class AdminController extends Controller
         $this->middleware('permission:admin-delete', ['only' => ['destroy']]);
         $this->adminRepo = $admin;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $admins = $this->adminRepo->allLatestUser();
+        $admins = Admin::all();
         if (\request()->ajax()) {
             return DataTables::of($admins)
+                ->filter(function ($admin) {
+                    if (\request()->has('name')) {
+                        $admin->where('name', 'like', "%" . request('name') . "%");
+                    }
+
+                    if (request()->has('email')) {
+                        $admin->where('email', 'like', "%" . request('email') . "%");
+                    }
+                })
                 ->addIndexColumn()
 
                 ->addColumn('role_info', function ($admin) {
                     return view('admin.access_control.user.role', compact('admin'));
                 })
                 ->addColumn('status', function ($admin) {
-                    switch ($admin->isActive){
+                    switch ($admin->isActive) {
                         case 1:
                             return '<div class="badge badge-success">Active</div>';
                         case 0:
@@ -46,6 +55,7 @@ class AdminController extends Controller
                 ->addColumn('action', function ($admin) {
                     return view('admin.access_control.user.action-button', compact('admin'));
                 })
+
                 ->rawColumns(['status', 'role_info', 'action'])
                 ->tojson();
         }
@@ -56,7 +66,7 @@ class AdminController extends Controller
     public function create()
     {
         $data = [
-           
+
             'roles' => Role::where('name', '!=', 'Super Admin')->where('name', '!=', 'Developer')->pluck('name', 'id'),
         ];
 
@@ -67,16 +77,16 @@ class AdminController extends Controller
     {
         try {
             DB::beginTransaction();
-            $data=$request->only(['name', 'hub_id', 'email', 'mobile']);
+            $data = $request->only(['name', 'hub_id', 'email', 'mobile']);
             $data['password'] = bcrypt($request->password);
             $user = $this->adminRepo->createAdmin($data);
             $user->assignRole($request->get('roles'));
             DB::commit();
-            return response()->successRedirect('New user created!','admin.admin.index');
+            return response()->successRedirect('New user created!', 'admin.admin.index');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
-            return response()->errorRedirect('Opps Something wrong!','admin.admin.index');
+            return response()->errorRedirect('Opps Something wrong!', 'admin.admin.index');
         }
     }
 
@@ -105,33 +115,35 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->except(['password', 'roles']);
-            $data['password'] =bcrypt($request->password);
+            $data['password'] = bcrypt($request->password);
             $this->adminRepo->updateAdmin($data, $admin);
             $admin->syncRoles($request->get('roles'));
             DB::commit();
-           return response()->successRedirect('Info Updated!','admin.admin.index');
+            return response()->successRedirect('Info Updated!', 'admin.admin.index');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::emergency("File:" . $e->getFile() . "Line:" . $e->getLine() . "Message:" . $e->getMessage());
-            return response()->errorRedirect('Opps Something wrong!','admin.admin.index');
+            return response()->errorRedirect('Opps Something wrong!', 'admin.admin.index');
         }
     }
 
     public function destroy(Admin $admin)
     {
         $this->adminRepo->deleteAdmin($admin);
-        return response()->successRedirect('Info Deleted!','admin.admin.index');
+        return response()->successRedirect('Info Deleted!', 'admin.admin.index');
     }
 
-    public function login($adminId){
+    public function login($adminId)
+    {
         $data['admin'] = \auth('admin')->loginUsingId($adminId);
         session(['loggedIn-from-admin' => true]);
         return redirect()->route('admin.dashboard');
     }
 
-    public function passwordReset($adminId){
+    public function passwordReset($adminId)
+    {
         $admin = $this->adminRepo->getAnInstance($adminId);
-        $this->adminRepo->updateAdmin(['password'=>bcrypt('12345678')], $admin);
-        return response()->successRedirect('Password Reset','admin.admin.index');
+        $this->adminRepo->updateAdmin(['password' => bcrypt('12345678')], $admin);
+        return response()->successRedirect('Password Reset', 'admin.admin.index');
     }
 }

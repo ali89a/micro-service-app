@@ -45,6 +45,14 @@
                                     <input type="text" id="to_date" name="to_date" class="form-control flatpickr-basic" placeholder="YYYY-MM-DD" />
                                 </div>
                                 <div class="col-md-3 form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Search By Name" value="{{request()->name}}">
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="email" name="email" class="form-control" placeholder="Search By Email" value="{{request()->email}}">
+                                </div>
+                                <div class="col-md-3 form-group">
                                     <label for="button"></label>
                                     <button class="btn btn-primary form-control" type="submit">Search</button>
                                 </div>
@@ -78,7 +86,9 @@
             responsive: true,
             serverSide: true,
             processing: true,
-            ajax: '{{ route('admin.admin.index') }}',
+            ajax: {
+                url: "{{ route('admin.admin.index') }}",
+            },
             columns: [{
                     data: "DT_RowIndex",
                     title: "SL",
@@ -125,4 +135,5 @@
         });
     })
 </script>
+
 @endpush

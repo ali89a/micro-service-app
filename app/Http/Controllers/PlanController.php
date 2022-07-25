@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\PlanRole;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -36,7 +37,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        return view('admin.plan.create');
+        $arrDuration = Plan::$arrDuration;
+        return view('admin.plan.create', compact('arrDuration'));
     }
 
     /**
@@ -47,7 +49,17 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
-        dd($request->all());
+        $plan = new Plan();
+        $plan->fill($request->all());
+        $plan->save();
+
+        $all_rule = $request->get('role');
+        foreach ($all_rule as $i => $row) {
+            $plan_role = new PlanRole();
+            $plan_role->plan_id = $plan->id;
+            $plan_role->name = $row;
+            $plan_role->save();
+        }
     }
 
     /**
@@ -69,7 +81,15 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        $arrDuration = Plan::$arrDuration;
+        $plan_roles = PlanRole::where('plan_id', $plan->id)->get();
+        $planroles[] = '';
+        foreach ($plan_roles as  $key => $plan_role) {
+            $planroles[] =  $plan_role->name;
+        }
+        //  dd($planroles);
+
+        return view('admin.plan.edit', compact('plan', 'arrDuration', 'planroles'));
     }
 
     /**

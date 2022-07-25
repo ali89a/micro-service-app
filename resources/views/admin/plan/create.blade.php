@@ -44,38 +44,91 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Plan Create</h4>
-                        <div class="dt-action-buttons text-right">
-                            <div class="dt-buttons d-inline-flex">
-                                <a href="{{route('admin.plans.index')}}" class="btn btn-sm btn-primary">{{__('Plan List')}}</a>
+                        <div class="card-header">
+                            <h4 class="card-title">Plan Create</h4>
+                            <div class="dt-action-buttons text-right">
+                                <div class="dt-buttons d-inline-flex">
+                                    <a href="{{route('admin.plans.index')}}" class="btn btn-sm btn-primary">{{__('Plan List')}}</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <hr>
                         <div class="card-body">
                             <form action="{{route('admin.plans.store')}}" method="POST" class="">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-xl-4 col-md-4 col-12 mb-1">
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
                                         <div class="form-group">
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-md-4 col-12 mb-1">
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
                                         <div class="form-group">
-                                            <label for="group_name">Group Name</label>
-                                            <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter Group Name">
+                                            <label for="price">Price</label>
+                                            <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price">
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-md-4 col-12 mb-1">
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
                                         <div class="form-group">
-                                            <label for="group_name">Guard Name</label>
-                                            <input type="text" class="form-control" id="guard_name" name="guard_name" placeholder="Enter Guard Name">
+                                            <label for="duration">Duration</label>
+                                            <input type="text" class="form-control" id="duration" name="duration" placeholder="Enter Duration">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-12 mb-1">
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <!-- <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description"> -->
+                                            <textarea class="form-control" id="description" name="description" placeholder="Enter Description"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Submit</button>
+                                <div class="row">
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
+                                        <h4>Modules</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="role[]" class="custom-control-input" id="user" value="user">
+                                                <label class="custom-control-label" for="user">User</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="role[]" class="custom-control-input" id="role" value="role">
+                                                <label class="custom-control-label" for="role">Role</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="role[]" class="custom-control-input" id="plan" value="plan">
+                                                <label class="custom-control-label" for="plan">Plan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-3 col-12 mb-1">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="role[]" class="custom-control-input" id="category" value="category">
+                                                <label class="custom-control-label" for="category">Category</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary mr-1 waves-effect waves-float waves-light">Submit</button>
+                                        <button type="reset" class="btn btn-outline-secondary waves-effect">Reset</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
