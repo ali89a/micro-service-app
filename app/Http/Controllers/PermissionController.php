@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PermissionDataTable;
 use App\Repository\Interfaces\PermissionInterface;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
@@ -27,32 +28,33 @@ class PermissionController extends Controller
         $this->middleware('permission:permission-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
      }
-    public function index()
+    public function index(PermissionDataTable $dataTable)
     {
+        return $dataTable->render('admin.access_control.permission.index');
 //        $data = [
 //            'permissions' => Permission::all(),
 //        ];
-        if (\request()->ajax()) {
-        $permissions = $this->permission->allPermissionList([], '*', []);
-            return DataTables::of($permissions)
-                ->addIndexColumn()
+        // if (\request()->ajax()) {
+        // $permissions = $this->permission->allPermissionList([], '*', []);
+        //     return DataTables::of($permissions)
+        //         ->addIndexColumn()
 
-                ->addColumn('permission_name', function ($permission) {
-                    return ucfirst(str_replace('-', ' ', $permission->name));
-                })
-                ->addColumn('guard_name', function ($permission) {
-                    return ucfirst($permission->guard_name);
-                })
-                ->addColumn('group_name', function ($permission) {
-                    return ucfirst(str_replace('-', ' ', $permission->group_name));
-                })
-                ->addColumn('action', function ($permission) {
-                    return view('admin.access_control.permission.action-button', compact('permission'));
-                })
-                ->rawColumns(['status', 'permission_name', 'guard_name', 'action', 'group_name'])
-                ->tojson();
-        }
-        return view('admin.access_control.permission.index');
+        //         ->addColumn('permission_name', function ($permission) {
+        //             return ucfirst(str_replace('-', ' ', $permission->name));
+        //         })
+        //         ->addColumn('guard_name', function ($permission) {
+        //             return ucfirst($permission->guard_name);
+        //         })
+        //         ->addColumn('group_name', function ($permission) {
+        //             return ucfirst(str_replace('-', ' ', $permission->group_name));
+        //         })
+        //         ->addColumn('action', function ($permission) {
+        //             return view('admin.access_control.permission.action-button', compact('permission'));
+        //         })
+        //         ->rawColumns(['status', 'permission_name', 'guard_name', 'action', 'group_name'])
+        //         ->tojson();
+        // }
+       // return view('admin.access_control.permission.index');
     }
 
     /**

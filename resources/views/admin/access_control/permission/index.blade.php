@@ -5,11 +5,11 @@
     @include('components.bread-crumb-component', [
     'title'=>'Permission list',
     'links'=>[
-        'Home'=>route('admin.dashboard'),
-         'Permission list'=>''
-        ]
+    'Home'=>route('admin.dashboard'),
+    'Permission list'=>''
+    ]
     ])
-{{--    <x-bread-crumb-component title='Permission list' :links="$links" />--}}
+    {{-- <x-bread-crumb-component title='Permission list' :links="$links" />--}}
     <div class="content-body">
         <!-- Responsive tables start -->
         <div class="row" id="table-responsive">
@@ -23,10 +23,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body table-responsive">
-                        <table id="dataTable" class="datatables-basic table table-striped table-secondary table-bordered">
-                            {{--  show from datatable--}}
-                        </table>
+                    <div class="card-body">
+                        <form id="search-form">
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Search By Name" value="{{request()->name}}">
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="button"></label>
+                                    <button class="btn btn-primary form-control" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            {!! $dataTable->table() !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -36,25 +48,18 @@
 </div>
 @endsection
 @push('script')
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').dataTable({
-                stateSave: true,
-                responsive: true,
-                serverSide: true,
-                processing: true,
-                ajax: '{{ route('admin.permission.index') }}',
-                columns: [
-                    {data: "DT_RowIndex",title:"SL", name: "DT_RowIndex", searchable: false, orderable: false},
-                    {data: "permission_name", title:"Name", searchable: true},
-                    {data: "name", title:"Permission Name", searchable: true},
-                    {data: "guard_name", "visible":false, searchable: true},
-                    {data: "group_name", "visible":false, searchable: true},
-                    {data: "guard_name", title:"Guard Name", searchable: true},
-                    {data: "group_name", title:"Group Name", searchable: true},
-                    {data: "action",title:"Action", orderable: false, searchable: false},
-                ],
-            });
-        })
-    </script>
+{!! $dataTable->scripts() !!}
+<script>
+    $(document).ready(function() {
+        let table = $('#permission-table');
+        $('#search-form').on('submit', function(e) {
+            table.draw();
+            e.preventDefault();
+            table.on('preXhr.dt', function(e, settings, data) {
+                data.name = $('#name').val();
+            })
+            table.DataTable().ajax.reload();
+        });
+    })
+</script>
 @endpush

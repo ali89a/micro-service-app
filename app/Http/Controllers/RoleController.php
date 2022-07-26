@@ -24,11 +24,18 @@ class RoleController extends Controller
         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (\request()->ajax()) {
             $roles = $this->role->allRoleList([], '*', []);
             return DataTables::of($roles)
+            ->filter(function ($roles) use ($request) {
+                if ($request->has('name')) {
+                    $roles->where('name', 'like', "%{$request->get('name')}%");
+                }
+
+              
+            })
                 ->addIndexColumn()
                 ->addColumn('role_name', function ($role) {
                     return ucfirst($role->name);

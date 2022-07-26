@@ -30,15 +30,6 @@ class AdminController extends Controller
         $admins = Admin::all();
         if (\request()->ajax()) {
             return DataTables::of($admins)
-                ->filter(function ($admin) {
-                    if (\request()->has('name')) {
-                        $admin->where('name', 'like', "%" . request('name') . "%");
-                    }
-
-                    if (request()->has('email')) {
-                        $admin->where('email', 'like', "%" . request('email') . "%");
-                    }
-                })
                 ->addIndexColumn()
 
                 ->addColumn('role_info', function ($admin) {
@@ -57,7 +48,7 @@ class AdminController extends Controller
                 })
 
                 ->rawColumns(['status', 'role_info', 'action'])
-                ->tojson();
+                ->make(true);
         }
         return view('admin.access_control.user.index');
     }
