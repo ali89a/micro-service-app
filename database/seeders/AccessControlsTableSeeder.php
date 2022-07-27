@@ -16,58 +16,35 @@ class AccessControlsTableSeeder extends Seeder
         // Reset cached roles and permissions
         app()['cache']->forget('spatie.permission.cache');
 
-        $dev = \App\Models\Admin::where('email', 'super@gmail.com')->first();
+        $dev = \App\Models\Admin::where('email', 'admin@gmail.com')->first();
 
         if (empty($dev)) {
 
             $data = [
                 [
                     'id' => '1',
-                    'name' => 'Super Admin',
-                    'email' => 'super@gmail.com',
-                    'password' => bcrypt('12345678'),
-                ],
-                [
-                    'id' => '2',
                     'name' => 'Admin',
                     'email' => 'admin@gmail.com',
                     'password' => bcrypt('12345678'),
                 ],
                 [
-                    'id' => '3',
+                    'id' => '2',
                     'name' => 'Accounts',
                     'email' => 'accounts@gmail.com',
                     'password' => bcrypt('12345678'),
                 ],
-                [
-                    'id' => '4',
-                    'name' => 'Incharge',
-                    'email' => 'incharge@gmail.com',
-                    'password' => bcrypt('12345678'),
-                ],
-                [
-                    'id' => '5',
-                    'name' => 'Merketing',
-                    'email' => 'merketing@gmail.com',
-                    'password' => bcrypt('12345678'),
-                ]
 
             ];
 
             DB::table('admins')->insert($data);
         }
 
-
-
-        $dev = \App\Models\Admin::where('email', 'super@gmail.com')->first();
+        $dev = \App\Models\Admin::where('email', 'admin@gmail.com')->first();
 
         //data for roles table
         $data = [
-            ['name' => 'Super Admin', 'guard_name' => 'admin'],
-            ['name' => 'Admin', 'guard_name' => 'admin'],
-            ['name' => 'Accounts', 'guard_name' => 'admin'],
-            ['name' => 'Incharge', 'guard_name' => 'admin'],
-            ['name' => 'Marketing', 'guard_name' => 'admin'],
+            ['name' => 'Admin', 'guard_name' => 'admin', 'company_id' => 1,'is_default'=>1],
+            ['name' => 'Accounts', 'guard_name' => 'admin', 'company_id' => 1,'is_default'=>0],
         ];
         DB::table('roles')->insert($data);
 
@@ -92,8 +69,6 @@ class AccessControlsTableSeeder extends Seeder
             ['name' => 'permission-show', 'guard_name' => 'admin', 'group_name' => 'permission'],
             ['name' => 'permission-edit', 'guard_name' => 'admin', 'group_name' => 'permission'],
             ['name' => 'permission-delete', 'guard_name' => 'admin', 'group_name' => 'permission'],
-
-           
 
             ['name' => 'division-list', 'guard_name' => 'admin', 'group_name' => 'division'],
             ['name' => 'division-create', 'guard_name' => 'admin', 'group_name' => 'division'],
@@ -120,9 +95,6 @@ class AccessControlsTableSeeder extends Seeder
         $data = [
             ['role_id' => 1, 'model_type' => 'App\Models\Admin', 'model_id' => $dev->id],
             ['role_id' => 2, 'model_type' => 'App\Models\Admin', 'model_id' => 2],
-            ['role_id' => 3, 'model_type' => 'App\Models\Admin', 'model_id' => 3],
-            ['role_id' => 4, 'model_type' => 'App\Models\Admin', 'model_id' => 4],
-            ['role_id' => 5, 'model_type' => 'App\Models\Admin', 'model_id' => 5],
         ];
         DB::table('model_has_roles')->insert($data);
         //Data for role permission pivot
